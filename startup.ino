@@ -7,6 +7,7 @@ void startup() {
   DEBUGLN(F(CATTY_VERSION)); DEBUGLN();
 
   initLED();
+  pinMode(BTN_PIN, INPUT_PULLUP);
 }
 
 void initLED() {

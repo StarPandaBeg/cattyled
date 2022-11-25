@@ -7,10 +7,13 @@
 #define DEBUG_MODE 1
 
 // Настройки светодиодов
-#define LED_PIN 2
+#define LED_PIN 1
 #define LED_AMOUNT 16
 #define LED_TYPE WS2812B
 #define LED_ORDER GRB
+
+// Настройки кнопки
+#define BTN_PIN D2
 
 struct LampData {
   bool power = false;

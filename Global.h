@@ -2,3 +2,4 @@
 
 struct LampData data;
 CRGB leds[LED_AMOUNT];
+VButton btn;
