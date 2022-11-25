@@ -10,5 +10,7 @@ void setup() {
 }
 
 void loop() {
-  btn_tick();
+  btnTick();
+
+  animationTick();
 }

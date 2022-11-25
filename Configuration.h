@@ -4,7 +4,7 @@
 // 0 - отладка отключена
 // 1 - вывод лога в COM-порт
 // 2 - вывода данных для плоттера
-#define DEBUG_MODE 1
+#define DEBUG_MODE 2
 
 // Настройки светодиодов
 #define LED_PIN 1
@@ -22,7 +22,7 @@ struct LampData {
   byte colorV = 255;
   byte mode = 0;
 
-  byte brightness = 100;
+  byte brightness = 255;
 };
 
 // ==========
@@ -33,6 +33,7 @@ struct LampData {
 #define DEBUGPLOT(x)
 #define DEBUGPLOTSTART(x)
 #define DEBUGPLOTEND(x)
+#define DEBUGPLOTONE(x)
 #elif DEBUG_MODE == 2
 #define DEBUG(x)
 #define DEBUGF(x,y)
@@ -40,6 +41,7 @@ struct LampData {
 #define DEBUGPLOT(x) Serial.print(F(" "));Serial.print(x)
 #define DEBUGPLOTSTART(x) Serial.print(x)
 #define DEBUGPLOTEND(x) Serial.print(F(" "));Serial.println(x)
+#define DEBUGPLOTONE(x) Serial.println(x);
 #else
 #define DEBUG(x)
 #define DEBUGF(x,y)
@@ -47,4 +49,5 @@ struct LampData {
 #define DEBUGPLOT(x)
 #define DEBUGPLOTSTART(x)
 #define DEBUGPLOTEND(x)
+#define DEBUGPLOTONE(x)
 #endif

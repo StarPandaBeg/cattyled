@@ -7,12 +7,18 @@ void startup() {
   DEBUGLN(F(CATTY_VERSION)); DEBUGLN();
 
   initLED();
+  initFilters();
   pinMode(BTN_PIN, INPUT_PULLUP);
 }
 
 void initLED() {
   FastLED.addLeds<LED_TYPE, LED_PIN, LED_ORDER>(leds, LED_AMOUNT).setCorrection( TypicalLEDStrip );
-  FastLED.setBrightness(data.brightness);
+  FastLED.setBrightness(getRealBrightness());
   FastLED.clear();
   FastLED.show();
+}
+
+void initFilters() {
+  brightnessFilter.setCoef(0.05);
+  brightnessFilter.setStep(5);
 }
