@@ -4,7 +4,7 @@
 // 0 - отладка отключена
 // 1 - вывод лога в COM-порт
 // 2 - вывода данных для плоттера
-#define DEBUG_MODE 2
+#define DEBUG_MODE 1
 
 // Настройки светодиодов
 #define LED_PIN 1
@@ -14,6 +14,7 @@
 
 // Настройки кнопки
 #define BTN_PIN D2
+#define BTN_COLOR_STEP 20
 
 struct LampData {
   bool power = false;
@@ -51,3 +52,5 @@ struct LampData {
 #define DEBUGPLOTEND(x)
 #define DEBUGPLOTONE(x)
 #endif
+
+#define MODE_AMOUNT 6

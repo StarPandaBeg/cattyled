@@ -8,7 +8,9 @@ void startup() {
 
   initLED();
   initFilters();
+  
   pinMode(BTN_PIN, INPUT_PULLUP);
+  btn.setStepTimeout(64);
 }
 
 void initLED() {

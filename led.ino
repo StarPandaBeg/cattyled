@@ -10,6 +10,6 @@ byte getRealBrightness() {
 void colorSmoothFill(byte h, byte s, byte v) {
   CRGB color = CHSV(h, s, v);
   CRGB lColor = leds[0];
-  lColor = blend(lColor, color, 15);
-  fill_solid(leds, LED_AMOUNT, lColor);
+    
+  fill_solid(leds, LED_AMOUNT, blend(lColor, color, 15));
 }
