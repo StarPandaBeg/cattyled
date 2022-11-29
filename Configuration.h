@@ -17,9 +17,16 @@
 #define BTN_COLOR_STEP 20
 
 // Настройки анимаций
-#define FIRE_HUE_START 3
-#define FIRE_HUE_GAP 18
-#define FIRE_SMOOTH_COEF 0.15
+#define HEART_HUE 0
+#define HEART_SAT 255
+#define HEART_VAL 80
+#define HEART_BEAT_HUE 0
+#define HEART_BEAT_SAT 255
+#define HEART_BEAT_VAL 255
+
+#define FIRE_HUE_START 0
+#define FIRE_HUE_GAP 16
+#define FIRE_SMOOTH_COEF 0.1
 #define FIRE_MIN_BRIGHT 80
 #define FIRE_MAX_BRIGHT 255
 #define FIRE_MIN_SAT 245

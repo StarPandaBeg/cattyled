@@ -19,6 +19,17 @@ CRGB getFireColor(int val) {
 void colorSmoothFill(byte h, byte s, byte v) {
   CRGB color = CHSV(h, s, v);
   CRGB lColor = leds[0];
-    
-  fill_solid(leds, LED_AMOUNT, blend(lColor, color, 15));
+
+  for (int i = 0; i < LED_AMOUNT; i++) {
+    leds[i] = blend(leds[i], color, 15);
+  }
+  FastLED.show();
+}
+
+int antipodal_index(int i) {
+  int iN = i + TOP_INDEX;
+  if (i >= TOP_INDEX) {
+    iN = ( i + TOP_INDEX ) % LED_AMOUNT;
+  }
+  return iN;
 }
