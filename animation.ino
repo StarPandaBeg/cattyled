@@ -2,6 +2,12 @@
 
 void animationTick() {
   if (!animation_flag) return;
+
+  if(fireTimer.period()) {
+    for (int i = 0; i < LED_AMOUNT; i++) {
+      zoneRndValues[i] = random(0, 10);
+    }
+  }
   
   if (ledUpdateTimer.period()) {
     FastLED.setBrightness(getRealBrightness());
@@ -15,6 +21,9 @@ void animationTick() {
       break;
     case 1:
       animationRainbow();
+      break;
+    case 4:
+      animationFire();
       break;
   }
 
@@ -34,5 +43,13 @@ void animationBlink() {
     else FastLED.setBrightness(60);
     FastLED.show();
     dir = !dir;
+  }
+}
+
+void animationFire() {
+  int thisPos = 0, lastPos = 0;
+  for (int i = 0; i < LED_AMOUNT; i++) {
+    zoneValues[i] = (float)zoneValues[i] * (1 - FIRE_SMOOTH_COEF) + (float)zoneRndValues[i] * 10 * FIRE_SMOOTH_COEF;
+    leds[i] = getFireColor(zoneValues[i]);
   }
 }

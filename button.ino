@@ -1,3 +1,5 @@
+/* Функции для кнопки */
+
 void btnTick() {
   if (!btn.poll(digitalRead(BTN_PIN))) return;
 
