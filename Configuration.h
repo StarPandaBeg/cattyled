@@ -4,7 +4,7 @@
 // 0 - отладка отключена
 // 1 - вывод лога в COM-порт
 // 2 - вывода данных для плоттера
-#define DEBUG_MODE 1
+#define DEBUG_MODE 2
 
 // Настройки светодиодов
 #define LED_PIN 1
@@ -15,6 +15,9 @@
 // Настройки кнопки
 #define BTN_PIN D2
 #define BTN_COLOR_STEP 20
+
+// Настройки подключения
+#define WIFI_CONNECTION_TIMER 15000
 
 // Настройки анимаций
 #define HEART_HUE 0
@@ -39,7 +42,10 @@ struct LampData {
   byte colorV = 255;
   byte mode = 0;
 
-  byte brightness = 255;
+  byte brightness = 150;
+
+  char[24] wifi_ssid;
+  char[24] wifi_password; 
 };
 
 // ==========

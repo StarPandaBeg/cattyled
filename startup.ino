@@ -11,6 +11,10 @@ void startup() {
   
   pinMode(BTN_PIN, INPUT_PULLUP);
   btn.setStepTimeout(64);
+
+  if (!initWifi()) {
+    startAP();
+  }
 }
 
 void initLED() {

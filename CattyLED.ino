@@ -1,4 +1,4 @@
-#define CATTY_VERSION "CattyLED v0.0.1 (27.10.2022) by StarPanda"
+#define CATTY_VERSION "CattyLED v0.0.2 (27.10.2022) by StarPanda"
 
 #include "Locale.h"
 #include "Libraries.h"
