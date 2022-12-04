@@ -6,4 +6,5 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
+#include "EEManager.h"
 #include "Timer.h"

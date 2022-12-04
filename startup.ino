@@ -6,6 +6,7 @@ void startup() {
   if (DEBUG_MODE) Serial.begin(115200);
   DEBUGLN(F(CATTY_VERSION)); DEBUGLN();
 
+  initMemory();
   initLED();
   initFilters();
   
@@ -18,6 +19,7 @@ void startup() {
   }
   
   randomSeed(micros());
+  memorySyncIP();
   mqttInit();
 }
 

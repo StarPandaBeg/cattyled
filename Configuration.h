@@ -55,6 +55,9 @@
 #define LOADING_ANIMATION_BRIGHTNESS_MIN 5
 #define LOADING_ANIMATION_BRIGHTNESS_MAX 140
 
+// Ключ EEPROM. При изменении все содержимое EEPROM перезаписывается.
+#define EEPROM_KEY 'a'
+
 struct LampData {
   bool power = false;
   byte colorH = 0;

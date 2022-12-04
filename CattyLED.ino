@@ -13,4 +13,5 @@ void loop() {
   btnTick();
   mqttTick();
   animationTick();
+  memoryTick();
 }

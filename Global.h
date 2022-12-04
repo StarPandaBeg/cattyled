@@ -8,6 +8,7 @@ VButton btn;
 GFilterRA brightnessFilter;
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
+EEManager memory(data);
 
 byte zoneValues[LED_AMOUNT];
 byte zoneRndValues[LED_AMOUNT];

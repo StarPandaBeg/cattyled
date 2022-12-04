@@ -22,7 +22,7 @@ void mqttCallback(char* topic, byte* payload, uint16_t len) {
       data.colorS = getFromIndex(str, 3);
       data.colorV = getFromIndex(str, 4);
       data.mode = getFromIndex(str, 5);
-      // memory.update();
+      memory.update();
       // socketSend(packetSync());
       break;
     case 2:
@@ -32,7 +32,7 @@ void mqttCallback(char* topic, byte* payload, uint16_t len) {
     case 3:
       // Power
       data.power = getFromIndex(str, 1);
-      // memory.update();
+      memory.update();
       // socketSend(packetPower());
       break;
     case 4:
@@ -40,13 +40,13 @@ void mqttCallback(char* topic, byte* payload, uint16_t len) {
       data.colorH = getFromIndex(str, 1);
       data.colorS = getFromIndex(str, 2);
       data.colorV = getFromIndex(str, 3);
-      // memory.update();
+      memory.update();
       // socketSend(packetColor());
       break;
     case 5:
       // Mode
       data.mode = getFromIndex(str, 1);
-      // memory.update();
+      memory.update();
       // socketSend(packetMode());
       break;
     case 6:
