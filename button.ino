@@ -14,6 +14,10 @@ void btnTick() {
   if (btn.hasClicks(3)) {
     data.mode = (data.mode + 1 >= MODE_AMOUNT) ? 0 : data.mode + 1;
   }
+  if (btn.hasClicks(4)) {
+    mqttSend(packetWink());
+    animationWink();
+  }
 
   static int8_t dir = 8;
   if (btn.step()) {

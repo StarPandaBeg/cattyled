@@ -32,3 +32,19 @@ int antipodalIndex(int i) {
   }
   return iN;
 }
+
+void brightLoop(int from, int to, int step) {
+  int val = from;
+  for (;;) {
+    FastLED.setBrightness(val);
+    FastLED.show();
+    delay(10);
+    if (from > to) {
+      val -= step;
+      if (val < to) return;
+    } else {
+      val += step;
+      if (val > to) return;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 /* Содержит объявление глобальных переменных */
 const int TOP_INDEX = int(LED_AMOUNT / 2);
+const uint8_t HEADER_LENGTH = strlen(PROTOCOL_HEADER);
 
 struct LampData data;
 CRGB leds[LED_AMOUNT];

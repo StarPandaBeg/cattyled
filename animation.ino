@@ -134,3 +134,13 @@ bool animationLoadingEnd() {
   FastLED.show();  
   return false;
 }
+
+void animationWink() {
+  if (! data.power) return;
+  brightLoop(data.brightness, 0, 20);
+  brightLoop(0, 255, 20);
+  brightLoop(255, 0, 20);
+  brightLoop(0, 255, 20);
+  brightLoop(255, 0, 20);
+  brightLoop(0, data.brightness, 20);
+}

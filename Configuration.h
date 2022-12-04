@@ -52,7 +52,7 @@
 #define FIRE_MIN_SAT 245
 #define FIRE_MAX_SAT 255
 
-#define LOADING_ANIMATION_BRIGHTNESS_MIN 10
+#define LOADING_ANIMATION_BRIGHTNESS_MIN 5
 #define LOADING_ANIMATION_BRIGHTNESS_MAX 140
 
 struct LampData {
@@ -68,8 +68,8 @@ struct LampData {
   char wifiPassword[24] = "67543576";
   uint8_t ip[4] = {0, 0, 0, 0};
 
-  char local_name[10] = LOCAL_ID;
-  char remote_name[10] = REMOTE_ID;
+  char localName[10] = LOCAL_ID;
+  char remoteName[10] = REMOTE_ID;
 
   char mqttHost[32] = MQTT_HOST;
   uint16_t mqttPort = MQTT_PORT;
