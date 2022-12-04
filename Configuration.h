@@ -18,6 +18,8 @@
 
 // Настройки подключения
 #define WIFI_CONNECTION_TIMER 15000
+#define WIFI_AP_NAME "CattyLED"
+#define WIFI_AP_PASSWORD "cattyled"
 
 // Настройки анимаций
 #define HEART_HUE 0
@@ -44,8 +46,9 @@ struct LampData {
 
   byte brightness = 150;
 
-  char[24] wifi_ssid;
-  char[24] wifi_password; 
+  char wifi_ssid[24];
+  char wifi_password[24];
+  uint8_t ip[4] = {0, 0, 0, 0};
 };
 
 // ==========

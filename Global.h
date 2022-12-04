@@ -10,6 +10,7 @@ byte zoneValues[LED_AMOUNT];
 byte zoneRndValues[LED_AMOUNT];
 
 int l_index = 0;
+bool is_ap = false;
 
 Timer animationTimer(30);
 Timer ledUpdateTimer(1);

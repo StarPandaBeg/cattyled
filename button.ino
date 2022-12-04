@@ -28,3 +28,8 @@ void btnTick() {
     animation_flag = true;
   }
 }
+
+bool btnAPTick() {
+  if (!btn.poll(digitalRead(BTN_PIN))) return false;
+  return btn.hasClicks(3);
+}
