@@ -5,14 +5,20 @@ void btnTick() {
 
   if (btn.hasClicks(1)) {
     data.power = !data.power;
+    mqttSend(packetPower());
+    memory.update();
   }
   if (!data.power) return;
 
   if (btn.hasClicks(2) && data.mode == 0) {
     data.colorH = (data.colorH + BTN_COLOR_STEP > 255) ? 0 : data.colorH + BTN_COLOR_STEP;
+    mqttSend(packetColor());
+    memory.update();
   }
   if (btn.hasClicks(3)) {
     data.mode = (data.mode + 1 >= MODE_AMOUNT) ? 0 : data.mode + 1;
+    mqttSend(packetMode());
+    memory.update();
   }
   if (btn.hasClicks(4)) {
     mqttSend(packetWink());
@@ -30,6 +36,7 @@ void btnTick() {
   if (btn.releaseStep()) {
     dir = -dir;
     animationFlag = true;
+    memory.update();
   }
 }
 

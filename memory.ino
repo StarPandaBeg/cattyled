@@ -16,3 +16,7 @@ void initMemory() {
 void memoryTick() {
   memory.tick();
 }
+
+void memoryReset() {
+  memory.reset();
+}
