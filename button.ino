@@ -19,13 +19,13 @@ void btnTick() {
   if (btn.step()) {
     data.brightness = constrain(data.brightness + dir, 20, 255);
     if (data.brightness == 255) {
-      animation_flag = false;
+      animationFlag = false;
       animationBlink();
     }
   }
   if (btn.releaseStep()) {
     dir = -dir;
-    animation_flag = true;
+    animationFlag = true;
   }
 }
 

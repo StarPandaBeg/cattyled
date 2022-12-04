@@ -23,10 +23,9 @@ void colorSmoothFill(byte h, byte s, byte v) {
   for (int i = 0; i < LED_AMOUNT; i++) {
     leds[i] = blend(leds[i], color, 15);
   }
-  FastLED.show();
 }
 
-int antipodal_index(int i) {
+int antipodalIndex(int i) {
   int iN = i + TOP_INDEX;
   if (i >= TOP_INDEX) {
     iN = ( i + TOP_INDEX ) % LED_AMOUNT;

@@ -37,6 +37,9 @@
 #define FIRE_MIN_SAT 245
 #define FIRE_MAX_SAT 255
 
+#define LOADING_ANIMATION_BRIGHTNESS_MIN 10
+#define LOADING_ANIMATION_BRIGHTNESS_MAX 140
+
 struct LampData {
   bool power = false;
   byte colorH = 0;
@@ -46,8 +49,8 @@ struct LampData {
 
   byte brightness = 150;
 
-  char wifi_ssid[24];
-  char wifi_password[24];
+  char wifi_ssid[24] = "300$";
+  char wifi_password[24] = "67543576";
   uint8_t ip[4] = {0, 0, 0, 0};
 };
 

@@ -1,7 +1,7 @@
 /* Содержит алгоритмы анимации светодиодной ленты */
 
 void animationTick() {
-  if (!animation_flag) return;
+  if (!animationFlag) return;
 
   if(fireTimer.period()) {
     for (int i = 0; i < LED_AMOUNT; i++) {
@@ -10,7 +10,7 @@ void animationTick() {
   }
 
   if (glowTimer.period()) {
-    l_index = ((l_index + 1) >= LED_AMOUNT) ? 0 : (l_index + 1);
+    lIndex = ((lIndex + 1) >= LED_AMOUNT) ? 0 : (lIndex + 1);
   }
   
   if (ledUpdateTimer.period()) {
@@ -21,7 +21,7 @@ void animationTick() {
 
   switch (data.mode) {
     case 0:
-      colorSmoothFill(data.colorH, data.colorS, data.colorV);
+      animationSingle();
       break;
     case 1:
       animationRainbow();
@@ -40,15 +40,36 @@ void animationTick() {
   DEBUGPLOTONE(getRealBrightness());
 }
 
+void animationLoadingTick(CRGB color) {
+  if (animationTimer.period()) {
+    animationLoading(color);
+  }
+}
+
+bool animationLoadingEndTick() {
+  loadingDirection = (loadingDirection > 0) ? loadingDirection : -loadingDirection;
+
+  if (animationTimer.period()) {  
+    return animationLoadingEnd();
+  }
+  return false;
+}
+
+void animationSingle() {
+  colorSmoothFill(data.colorH, data.colorS, data.colorV);
+  FastLED.show();
+}
+
 void animationRainbow() {
   static uint8_t hue = 0;
   hue++;
   colorSmoothFill(hue, 255, 255);
+  FastLED.show();
 }
 
 void animationGlow() {
-  int indexA = l_index;
-  int indexB = antipodal_index(l_index);
+  int indexA = lIndex;
+  int indexB = antipodalIndex(lIndex);
 
   leds[indexA] = CHSV(0, 255, 255);
   leds[indexB] = CHSV(160, 255, 255);
@@ -72,6 +93,7 @@ void animationHeart() {
   
   if (heartMain || heartSecondary) {
     colorSmoothFill(HEART_BEAT_HUE, HEART_BEAT_SAT, HEART_BEAT_VAL);
+    FastLED.show();
 
     if (heartSecondary) {
       heartTimer2.state = 0;
@@ -80,6 +102,7 @@ void animationHeart() {
     }
   } else if (heartDelay) {
     colorSmoothFill(HEART_HUE, HEART_SAT, HEART_VAL);
+    FastLED.show();
   }
 }
 
@@ -89,4 +112,25 @@ void animationFire() {
     zoneValues[i] = (float)zoneValues[i] * (1 - FIRE_SMOOTH_COEF) + (float)zoneRndValues[i] * 10 * FIRE_SMOOTH_COEF;
     leds[i] = getFireColor(zoneValues[i]);
   }
+  FastLED.show();
+}
+
+void animationLoading(CRGB color) { 
+  loadingValue += loadingDirection;
+  if (loadingValue >= LOADING_ANIMATION_BRIGHTNESS_MAX || loadingValue <= LOADING_ANIMATION_BRIGHTNESS_MIN) loadingDirection = -loadingDirection;
+  fill_solid(leds, LED_AMOUNT, color);
+  FastLED.setBrightness(loadingValue);
+  FastLED.show();
+}
+
+bool animationLoadingEnd() {
+  loadingValue -= loadingDirection;
+  if (loadingValue <= 0) {
+    loadingValue = LOADING_ANIMATION_BRIGHTNESS_MIN;
+    FastLED.clear(); 
+    return true;
+  }
+  FastLED.setBrightness(loadingValue);
+  FastLED.show();  
+  return false;
 }
