@@ -21,6 +21,21 @@
 #define WIFI_AP_NAME "CattyLED"
 #define WIFI_AP_PASSWORD "cattyled"
 
+// Настройки MQTT соединения
+#define MQTT_HOST "broker.emqx.io"
+#define MQTT_PORT 1883
+#define MQTT_PREFIX "/HXKxvE3FvgcWUQ4u/CattyLED_/"
+#define MQTT_USER ""
+#define MQTT_PASS ""
+
+// Настройки пары ламп
+#define LOCAL_ID "987654321"
+#define REMOTE_ID "123456789"
+
+// Настройки протокола соединения. Не рекомендуется изменять без крайней необходимости.
+#define PROTOCOL_HEADER "CATL:"
+#define PROTOCOL_SEPARATOR ","
+
 // Настройки анимаций
 #define HEART_HUE 0
 #define HEART_SAT 255
@@ -49,9 +64,18 @@ struct LampData {
 
   byte brightness = 150;
 
-  char wifi_ssid[24] = "300$";
-  char wifi_password[24] = "67543576";
+  char wifiSSID[24] = "300$";
+  char wifiPassword[24] = "67543576";
   uint8_t ip[4] = {0, 0, 0, 0};
+
+  char local_name[10] = LOCAL_ID;
+  char remote_name[10] = REMOTE_ID;
+
+  char mqttHost[32] = MQTT_HOST;
+  uint16_t mqttPort = MQTT_PORT;
+  char mqttPrefix[32] = MQTT_PREFIX;
+  char mqttUser[32] = MQTT_USER;
+  char mqttPassword[32] = MQTT_PASS;
 };
 
 // ==========

@@ -1,10 +1,12 @@
+/* Содержит функции, связанные с WiFi подключением */
+
 bool initWifi() {
-   if (strlen(data.wifi_ssid) == 0) {
+   if (strlen(data.wifiSSID) == 0) {
      return false;
    }
 
    WiFi.mode(WIFI_STA);
-   WiFi.begin(data.wifi_ssid, data.wifi_password);
+   WiFi.begin(data.wifiSSID, data.wifiPassword);
 
    Timer wifiConnectionTimer(WIFI_CONNECTION_TIMER);
    wifiConnectionTimer.restart();
@@ -38,12 +40,9 @@ void startAP() {
     yield();
     animationLoadingTick(CRGB::Gold);
     
-    if (btnAPTick()) {
-      break;
-    }
+    if (btnAPTick()) { break; }
   }
 
   WiFi.softAPdisconnect(true);
   while (!animationLoadingEndTick()) { yield(); }
-  ESP.restart();
 }

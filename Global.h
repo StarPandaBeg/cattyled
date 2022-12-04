@@ -5,12 +5,15 @@ struct LampData data;
 CRGB leds[LED_AMOUNT];
 VButton btn;
 GFilterRA brightnessFilter;
+WiFiClient espClient;
+PubSubClient mqtt(espClient);
 
 byte zoneValues[LED_AMOUNT];
 byte zoneRndValues[LED_AMOUNT];
 
 int lIndex = 0;
 bool isAP = false;
+bool onlineFlag = false;
 
 int8_t loadingDirection = 1;
 uint8_t loadingValue = LOADING_ANIMATION_BRIGHTNESS_MIN;
@@ -23,5 +26,8 @@ Timer glowTimer(80);
 Timer heartTimer1(2100);
 Timer heartTimer2(500, false);
 Timer heartTimer3(5);
+Timer mqttConnectTimer(15000, false);
+Timer remoteOnlineTimer(15000, false);
+Timer mqttPingTimer(5000);
 
 bool animationFlag = true;

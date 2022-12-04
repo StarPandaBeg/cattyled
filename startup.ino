@@ -2,7 +2,7 @@
 
 void startup() {
   delay(20);
-
+  
   if (DEBUG_MODE) Serial.begin(115200);
   DEBUGLN(F(CATTY_VERSION)); DEBUGLN();
 
@@ -14,7 +14,11 @@ void startup() {
 
   if (!initWifi()) {
     startAP();
+    ESP.restart();
   }
+  
+  randomSeed(micros());
+  mqttInit();
 }
 
 void initLED() {
