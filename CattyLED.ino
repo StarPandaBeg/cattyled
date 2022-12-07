@@ -12,6 +12,7 @@ void setup() {
 void loop() {
   btnTick();
   mqttTick();
+  socketTick();
   animationTick();
   memoryTick();
 }

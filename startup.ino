@@ -13,7 +13,9 @@ void startup() {
   pinMode(BTN_PIN, INPUT_PULLUP);
   btn.setStepTimeout(64);
 
+  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
   if (!initWifi()) {
+    DEBUGLN(F(L_WIFI_CONNECTION_ERROR));
     startAP();
     ESP.restart();
   }
@@ -21,6 +23,11 @@ void startup() {
   randomSeed(micros());
   memorySyncIP();
   mqttInit();
+  initSocket();
+  server.begin();
+
+  IPAddress ip = IPAddress(data.ip[0], data.ip[1], data.ip[2], data.ip[3]);
+  DEBUG(F(L_IP_ADDRESS)); DEBUGLN(ip.toString());
 }
 
 void initLED() {

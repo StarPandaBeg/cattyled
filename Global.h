@@ -9,6 +9,8 @@ GFilterRA brightnessFilter;
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
 EEManager memory(data);
+AsyncWebServer server(80);
+AsyncWebSocket ws("/ws");
 
 byte zoneValues[LED_AMOUNT];
 byte zoneRndValues[LED_AMOUNT];
