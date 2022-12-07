@@ -29,3 +29,5 @@
 
 #define L_QUOTE_L "\""
 #define L_QUOTE_R "\""
+
+#define L_RESTART "Restarting..."

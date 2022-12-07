@@ -9,6 +9,7 @@ void mqttCallback(char* topic, byte* payload, uint16_t len) {
   char* str = (char*)payload;
 
   if (strncmp(str, PROTOCOL_HEADER, HEADER_LENGTH)) return;
+  DEBUG(F(L_MQTT_IN));DEBUGLN(str);
   str += HEADER_LENGTH;
 
   switch (getFromIndex(str, 0)) {
@@ -63,19 +64,27 @@ void mqttConnect() {
   String id("CattyLED-");
   id += String(random(0xffffff), HEX);
 
+  DEBUG(F(L_MQTT_CONNECTING));
+  DEBUG(data.mqttHost);DEBUG(F(":"));DEBUGLN(data.mqttPort);
+
   bool connection = false;
   if (strlen(data.mqttUser) == 0) {
     connection = mqtt.connect(id.c_str());
   } else {    
     connection = mqtt.connect(id.c_str(), data.mqttUser, data.mqttPassword);
+    DEBUG(F(L_MQTT_USER));
+    DEBUGLN(data.mqttUser);
   }
 
   if (!connection) { 
+    DEBUGLN(F(L_MQTT_CONNECTION_ERROR));
     onlineFlag = false; 
     mqttConnectTimer.restart(); 
     return; 
   }
 
+  DEBUG(F(L_MQTT_SUBCRIBING_TO_TOPIC));
+  DEBUGLN(getLocalTopic());
   mqtt.subscribe(getLocalTopic());
 }
 
@@ -96,6 +105,7 @@ void mqttTick() {
 
 bool mqttSend(char* str) {
   if (!mqtt.connected()) return false;
+  DEBUG(F(L_MQTT_OUT)); DEBUGLN(str);
   mqtt.publish(getRemoteTopic(), str);
   return true;
 }

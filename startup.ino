@@ -17,6 +17,7 @@ void startup() {
   if (!initWifi()) {
     DEBUGLN(F(L_WIFI_CONNECTION_ERROR));
     startAP();
+    DEBUGLN(F(L_RESTART));
     ESP.restart();
   }
   

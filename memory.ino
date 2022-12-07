@@ -11,6 +11,11 @@ void memorySyncIP() {
 void initMemory() {
   EEPROM.begin(sizeof(data) + 1);
   memory.begin(0, EEPROM_KEY);
+
+  DEBUG(F(L_EEPROM_INIT_COMPLETED));
+  DEBUG(F(L_QUOTE_L));
+  DEBUG(EEPROM_KEY); 
+  DEBUGLN(F(L_QUOTE_R));
 }
 
 void memoryTick() {
