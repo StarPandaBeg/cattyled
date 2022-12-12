@@ -16,6 +16,9 @@
 #define BTN_PIN D2
 #define BTN_COLOR_STEP 20
 
+// Настройки вибродатчика
+#define VIBRO_PIN A0
+
 // Настройки подключения
 #define WIFI_CONNECTION_TIMER 15000
 #define WIFI_AP_NAME "CattyLED"

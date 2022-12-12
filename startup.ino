@@ -11,9 +11,13 @@ void startup() {
   initFilters();
   
   pinMode(BTN_PIN, INPUT_PULLUP);
+  pinMode(VIBRO_PIN, INPUT_PULLUP);
   btn.setStepTimeout(64);
 
-  DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
+  if (LittleFS.begin()) DEBUGLN(F(L_FS_INIT_COMPLETED));
+  else DEBUGLN(F(L_FS_INIT_ERROR));
+
+  initServer();
   if (!initWifi()) {
     DEBUGLN(F(L_WIFI_CONNECTION_ERROR));
     startAP();
@@ -21,14 +25,16 @@ void startup() {
     ESP.restart();
   }
   
+  IPAddress ip = IPAddress(data.ip[0], data.ip[1], data.ip[2], data.ip[3]);
+  DEBUG(F(L_IP_ADDRESS)); DEBUGLN(ip.toString());
+  
   randomSeed(micros());
   memorySyncIP();
   mqttInit();
   initSocket();
-  server.begin();
 
-  IPAddress ip = IPAddress(data.ip[0], data.ip[1], data.ip[2], data.ip[3]);
-  DEBUG(F(L_IP_ADDRESS)); DEBUGLN(ip.toString());
+  serverWriteData(ip);
+  server.begin(); 
 }
 
 void initLED() {

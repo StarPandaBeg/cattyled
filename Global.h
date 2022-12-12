@@ -4,7 +4,7 @@ const uint8_t HEADER_LENGTH = strlen(PROTOCOL_HEADER);
 
 struct LampData data;
 CRGB leds[LED_AMOUNT];
-VButton btn;
+VButton btn, vibroBtn;
 GFilterRA brightnessFilter;
 WiFiClient espClient;
 PubSubClient mqtt(espClient);
@@ -18,6 +18,7 @@ byte zoneRndValues[LED_AMOUNT];
 int lIndex = 0;
 bool isAP = false;
 bool onlineFlag = false;
+bool vibroFlag = true;
 
 int8_t loadingDirection = 1;
 uint8_t loadingValue = LOADING_ANIMATION_BRIGHTNESS_MIN;
