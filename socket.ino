@@ -5,6 +5,11 @@ void initSocket() {
 
 void socketTick() {
   ws.cleanupClients();
+
+  if (needUpdateCheck) {
+    needUpdateCheck = false;
+    socketSendTo(packetUpdates(), lastClient);
+  }
 }
 
 void socketSend(char* str) {
@@ -49,6 +54,12 @@ void parseWebSocketMessage(char* str, AsyncWebSocketClient *client) {
   str += HEADER_LENGTH;
   DEBUG(F(L_SOCKET_IN)); DEBUGLN(str);
 
+  int val = getFromIndex(str, 0);
+  if (val >= 0) parseDefaultCommands(str, client);
+  else parseConfigCommands(str, client);
+}
+
+void parseDefaultCommands(char* str, AsyncWebSocketClient *client) {
   switch (getFromIndex(str, 0)) {
     case 0:
       // Ping (TODO)
@@ -99,6 +110,83 @@ void parseWebSocketMessage(char* str, AsyncWebSocketClient *client) {
     case 9:
       // Status
       socketSendTo(packetStatus(), client);
+      break;
+    case 11:
+      // Battery status
+      socketSendTo(packetBattery(), client);
+      break;
+  }
+}
+
+void parseConfigCommands(char* str, AsyncWebSocketClient *client) {
+  switch (getFromIndex(str, 0)) {
+    case -1:
+      socketSendTo(packetWifi(), client);
+      break;
+     
+    case -3:
+      // WiFi settings
+      char* ssid;
+      char* password;
+
+      strtok(str, PROTOCOL_SEPARATOR);
+      ssid = strtok(NULL, PROTOCOL_SEPARATOR);
+      password = strtok(NULL, PROTOCOL_SEPARATOR);
+      
+      strcpy(data.wifiSSID, ssid);
+      strcpy(data.wifiPassword, password);
+      memory.updateNow();
+      break;
+
+    case -5:
+      socketSendTo(packetMqtt(), client);
+      break;
+
+    case -7:
+      socketSendTo(packetVersion(), client);
+      break;
+
+    case -9:
+      needUpdateCheck = true;
+      lastClient = client;
+      break;
+
+    case -11:
+      needUpdate = true;
+      ws.enable(false);
+      lastClient = client;
+      break;
+
+    case -13:
+      char* tmp;
+
+      strtok(str, PROTOCOL_SEPARATOR);
+      tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+      strcpy(data.mqttHost, tmp);
+      tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+      data.mqttPort = atoi(tmp);
+      tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+      strcpy(data.mqttPrefix, tmp);
+      tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+      if (tmp[0] == '1') {
+        tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+        strcpy(data.mqttUser, tmp);
+        tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+        strcpy(data.mqttPassword, tmp);
+      } else {
+        strcpy(data.mqttUser, "");
+        strcpy(data.mqttPassword, "");
+      }
+
+      memory.updateNow();
+      break;
+
+    case -15:
+      ESP.restart();
+      break;
+
+    case -17:
+      socketSendTo(packetIp(), client);
       break;
   }
 }

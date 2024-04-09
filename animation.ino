@@ -2,6 +2,7 @@
 
 void animationTick() {
   if (!animationFlag) return;
+  byte br = getRealBrightness();
 
   if(fireTimer.period()) {
     for (int i = 0; i < LED_AMOUNT; i++) {
@@ -14,10 +15,16 @@ void animationTick() {
   }
   
   if (ledUpdateTimer.period()) {
-    FastLED.setBrightness(getRealBrightness());
+    FastLED.setBrightness(br);
     FastLED.show();
   }
   if (!(animationTimer.period())) return;
+  if (br <= 1) {
+    if (ledPowerFlag) led_set_state(false);
+    return;
+  } else {
+    if (!ledPowerFlag) led_set_state(true);
+  }
 
   switch (data.mode) {
     case 0:
@@ -34,6 +41,9 @@ void animationTick() {
       break;
     case 4:
       animationFire();
+      break;
+    case 5:
+      animationLights();
       break;
   }
 
@@ -115,6 +125,17 @@ void animationFire() {
   FastLED.show();
 }
 
+void animationLights() {
+  static byte colorIndex = 0;
+  static bool dir = false;
+
+  if (lightsTimer1.period()) dir = !dir;
+  if (lightsTimer2.period()) colorIndex = (colorIndex + 1 > 5) ? 0 : colorIndex + 1;
+
+  colorSmoothFill(dir ? lightsColors[colorIndex] : CRGB::Black);
+  FastLED.show();
+}
+
 void animationLoading(CRGB color) { 
   loadingValue += loadingDirection;
   if (loadingValue >= LOADING_ANIMATION_BRIGHTNESS_MAX || loadingValue <= LOADING_ANIMATION_BRIGHTNESS_MIN) loadingDirection = -loadingDirection;
@@ -128,6 +149,7 @@ bool animationLoadingEnd() {
   if (loadingValue <= 0) {
     loadingValue = LOADING_ANIMATION_BRIGHTNESS_MIN;
     FastLED.clear(); 
+    FastLED.show();
     return true;
   }
   FastLED.setBrightness(loadingValue);

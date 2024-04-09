@@ -27,7 +27,15 @@
 #define L_SOCKET_IN "[WS] >> "
 #define L_SOCKET_OUT "[WS] << "
 
+#define L_FS_VERSION "Filesystem version: %s"
+#define L_OTA_WEB_UPDATE_STARTED "[WEB OTA] - Update started"
+#define L_OTA_WEB_UPDATE_FINISHED "[WEB OTA] - Update finished"
+#define L_OTA_WEB_UPDATE_PROGRESS "[WEB OTA] - Progress: %d%% (%d of %d)"
+#define L_OTA_WEB_UPDATE_ERROR "[WEB OTA] - Update error (code %d)"
+
 #define L_QUOTE_L "\""
 #define L_QUOTE_R "\""
 
 #define L_RESTART "Restarting..."
+#define L_SLEEP "Going to sleep mode."
+#define L_WAKEUP "Good morning!"

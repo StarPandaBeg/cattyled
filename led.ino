@@ -17,9 +17,10 @@ CRGB getFireColor(int val) {
 }
 
 void colorSmoothFill(byte h, byte s, byte v) {
-  CRGB color = CHSV(h, s, v);
-  CRGB lColor = leds[0];
+  colorSmoothFill(CHSV(h, s, v));
+}
 
+void colorSmoothFill(CRGB color) {
   for (int i = 0; i < LED_AMOUNT; i++) {
     leds[i] = blend(leds[i], color, 15);
   }

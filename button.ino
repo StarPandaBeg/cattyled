@@ -6,8 +6,12 @@ void btnTick() {
 }
 
 void buttonTick() {
-  if (!btn.poll(digitalRead(BTN_PIN))) return;
+  if (!btn.poll(!digitalRead(BTN_PIN))) return;
 
+  if (btn.hasClicks(1)) {
+    sleep();
+    return;
+  }
   if (btn.hasClicks(2)) {
     vibroFlag = !vibroFlag;
   }
@@ -38,7 +42,7 @@ void vibroButtonTick() {
     memory.update();
   }
   if (!data.power) return;
-  if (vibroBtn.hasClicks(2) && data.mode == 0) {
+  if (vibroBtn.hasClicks(4) && data.mode == 0) {
     data.colorH = (data.colorH + BTN_COLOR_STEP > 255) ? 0 : data.colorH + BTN_COLOR_STEP;
     mqttSend(packetColor());
     socketSend(packetColor());
@@ -50,28 +54,37 @@ void vibroButtonTick() {
     socketSend(packetMode());
     memory.update();
   }
-  if (vibroBtn.hasClicks(4)) {
+  if (vibroBtn.hasClicks(2)) {
     mqttSend(packetWink());
     socketSend(packetWink());
     animationWink();
   }
 }
 
-bool btnAPTick() {
-  if (!btn.poll(digitalRead(BTN_PIN))) return false;
-  return btn.hasClicks(3);
+void btnAPTick() {
+  btn.poll(!digitalRead(BTN_PIN));
+  if (btn.hasClicks(1)) {
+    sleep();
+  }
+  if (btn.hasClicks(10)) { memory.reset(); sleep(); }
+}
+
+bool btnWifiTick() {
+  if (!btn.poll(!digitalRead(BTN_PIN))) return false;
+  if (btn.hasClicks(1)) { sleep(); return true; }
+  if (btn.hasClicks(3)) { return true; }
+  return false;
 }
 
 bool vibroSensorRead(const uint8_t pin) {
   static bool flag = false;
   static long tmr = 0;
   
-  int val = 1024 - analogRead(pin);
-  DEBUGLN(val);
-  if (val > 150 && !flag && millis() - tmr > 150) {
+  byte val = 1 - digitalRead(pin);
+  if (val == 1 && !flag && millis() - tmr > 150) {
     flag = true;
     tmr = millis();
-  } else if (val <= 150 && flag && millis() - tmr > 150) {
+  } else if (val == 0 && flag && millis() - tmr > 150) {
     flag = false;
     tmr = millis();
   }

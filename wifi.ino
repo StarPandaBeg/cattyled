@@ -17,10 +17,10 @@ bool initWifi() {
    while (WiFi.status() != WL_CONNECTED) {
      yield();
      animationLoadingTick(CRGB::Blue);
-
-     if (wifiConnectionTimer.period()) {
+     
+     if (wifiConnectionTimer.period() || btnWifiTick()) {
        WiFi.disconnect();
-       while (!animationLoadingEndTick()) {}
+       while (!animationLoadingEndTick()) { yield(); }
        return false;
      }
    }
@@ -28,8 +28,9 @@ bool initWifi() {
    WiFi.persistent(false);
    WiFi.setSleepMode(WIFI_NONE_SLEEP);
    
-   while (!animationLoadingEndTick()) {}
+   while (!animationLoadingEndTick()) { yield(); btnWifiTick(); }
    DEBUGLN(F(L_WIFI_CONNECTED));
+   
    return true;
 }
 
@@ -48,11 +49,20 @@ void startAP() {
   DEBUGLN(F(L_QUOTE_R)); 
   DEBUG(F(L_IP_LOCAL_ADDRESS)); DEBUGLN(WiFi.softAPIP());
 
+  dnsServer.start(53, "*", WiFi.softAPIP());
+
+  server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);
+  serverWriteData(WiFi.softAPIP(), true);
+  server.begin();
+
   while (1) { 
     yield();
+    dnsServer.processNextRequest();
     animationLoadingTick(CRGB::Gold);
-    
-    if (btnAPTick()) { break; }
+    btnAPTick();
+
+    socketTick();
+    memoryTick();
   }
 
   WiFi.softAPdisconnect(true);

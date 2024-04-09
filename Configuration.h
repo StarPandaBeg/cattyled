@@ -17,11 +17,25 @@
 #define BTN_COLOR_STEP 20
 
 // Настройки вибродатчика
-#define VIBRO_PIN A0
+#define VIBRO_PIN D3
+#define VIBRO_POWER_PIN D5
+
+// Мосфет
+#define MOSFET_PIN D6
+#define MOSFET_OPENED_STATE LOW
+#define MOSFET_CLOSED_STATE HIGH
+
+// Индикатор заряда
+#define CHARGING_PIN D7
+#define BATTERY_PIN A0
+#define BATTERY_COEF 0.36
+#define BATTERY_LOW_LEVEL 25
+#define BATTERY_CRITICAL_LEVEL 10
 
 // Настройки подключения
 #define WIFI_CONNECTION_TIMER 15000
 #define WIFI_AP_NAME "CattyLED"
+#define WIFI_OTA_AP_NAME "CattyLED_OTA"
 #define WIFI_AP_PASSWORD "cattyled"
 
 // Настройки MQTT соединения
@@ -32,12 +46,18 @@
 #define MQTT_PASS ""
 
 // Настройки пары ламп
-#define LOCAL_ID "987654321"
-#define REMOTE_ID "123456789"
+#define LOCAL_ID "LampKo"
+#define REMOTE_ID "LampDi"
 
 // Настройки протокола соединения. Не рекомендуется изменять без крайней необходимости.
 #define PROTOCOL_HEADER "CATL:"
 #define PROTOCOL_SEPARATOR ","
+
+// Настройки обновления
+#define UPDATE_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/firmware.bin"
+#define UPDATE_VERSION_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/firmware_ver.txt"
+#define UPDATE_FS_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/fs.bin"
+#define UPDATE_FS_VERSION_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/fs_ver.txt"
 
 // Настройки анимаций
 #define HEART_HUE 0
@@ -70,8 +90,8 @@ struct LampData {
 
   byte brightness = 150;
 
-  char wifiSSID[24] = "300$";
-  char wifiPassword[24] = "67543576";
+  char wifiSSID[24] = "";
+  char wifiPassword[24] = "";
   uint8_t ip[4] = {0, 0, 0, 0};
 
   char localName[10] = LOCAL_ID;

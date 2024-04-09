@@ -1,4 +1,5 @@
-#define CATTY_VERSION "CattyLED v0.0.2 (27.10.2022) by StarPanda"
+#define FIRMWARE_VERSION "1.0.5"
+#define CATTY_VERSION "CattyLED v" FIRMWARE_VERSION " by StarPanda"
 
 #include "Locale.h"
 #include "Libraries.h"
@@ -10,6 +11,14 @@ void setup() {
 }
 
 void loop() {
+  if (needUpdate) {
+    otaStartUpdate();
+    needUpdate = false;
+    ws.enable(true);
+    return;
+  }
+
+  batteryTick();
   btnTick();
   mqttTick();
   socketTick();

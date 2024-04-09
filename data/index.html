@@ -6,11 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/config.js"></script>
     <title>CattyLED</title>
-    <script type="module" crossorigin src="/assets/index.31af21f3.js"></script>
-    <link rel="stylesheet" href="/assets/index.0577d296.css">
+    <script type="module" crossorigin src="/assets/index.e6c75f02.js"></script>
+    <link rel="stylesheet" href="/assets/index.8046dcc6.css">
   </head>
   <body>
     <div id="app"></div>
+
+    <canvas id="snow"></canvas>
     
+    <script src="/snow.js"></script>
+    <script>
+      window.onload = () => {
+        _snowCanvas({
+          el: document.getElementById("snow"),
+          backgroundColor: "transparent",
+          snowColor: "#ffffff2f",
+          maxSpeed: 1.7
+        })
+      }
+    </script>
   </body>
 </html>
