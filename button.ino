@@ -66,13 +66,25 @@ void btnAPTick() {
   if (btn.hasClicks(1)) {
     sleep();
   }
-  if (btn.hasClicks(10)) { memory.reset(); sleep(); }
+  if (btn.hasClicks(10)) { memory.reset(); ESP.restart(); }
+}
+
+bool btnOTATick() {
+  btn.poll(!digitalRead(BTN_PIN));
+  if (btn.hasClicks(1) && !otaInProgress) {
+    return true;
+  }
+  return false;
 }
 
 bool btnWifiTick() {
   if (!btn.poll(!digitalRead(BTN_PIN))) return false;
   if (btn.hasClicks(1)) { sleep(); return true; }
   if (btn.hasClicks(3)) { return true; }
+  if (btn.hasClicks(5)) { 
+    otaMode = true;
+    return true; 
+  }
   return false;
 }
 

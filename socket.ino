@@ -13,11 +13,13 @@ void socketTick() {
 }
 
 void socketSend(char* str) {
+  if (otaMode) return;
   DEBUG(F(L_SOCKET_OUT)); DEBUGLN(str);
   ws.textAll(str);
 }
 
 void socketSendTo(char* str, AsyncWebSocketClient *client) {
+  if (otaMode) return;
   DEBUG(F(L_SOCKET_OUT)); DEBUGLN(str);
   client->printf(str);
 }

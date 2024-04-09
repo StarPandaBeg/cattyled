@@ -15,6 +15,10 @@
 #define L_WIFI_CONNECTED "WiFi connected"
 #define L_WIFI_CONNECTION_ERROR "Unable to connect to WiFi"
 
+#define L_OTA_MODE "Switching to manual OTA by user request"
+#define L_WIFI_OTA_CREATING "Creating OTA AP - "
+#define L_WIFI_OTA_PASSWORD "OTA AP password - "
+
 #define L_MQTT_CONNECTING "Connecting to MQTT broker - "
 #define L_MQTT_USER "Using user account - "
 #define L_MQTT_SUBCRIBING_TO_TOPIC "Subscribing to topic "
@@ -28,10 +32,10 @@
 #define L_SOCKET_OUT "[WS] << "
 
 #define L_FS_VERSION "Filesystem version: %s"
-#define L_OTA_WEB_UPDATE_STARTED "[WEB OTA] - Update started"
-#define L_OTA_WEB_UPDATE_FINISHED "[WEB OTA] - Update finished"
-#define L_OTA_WEB_UPDATE_PROGRESS "[WEB OTA] - Progress: %d%% (%d of %d)"
-#define L_OTA_WEB_UPDATE_ERROR "[WEB OTA] - Update error (code %d)"
+#define L_OTA_UPDATE_STARTED "[OTA] - Update started"
+#define L_OTA_UPDATE_FINISHED "[OTA] - Update finished"
+#define L_OTA_UPDATE_PROGRESS "[OTA] - Progress: %d%% (%d of %d)"
+#define L_OTA_UPDATE_ERROR "[OTA] - Update error (code %d)"
 
 #define L_QUOTE_L "\""
 #define L_QUOTE_R "\""

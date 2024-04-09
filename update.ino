@@ -11,6 +11,41 @@ void initOTA() {
   ESPhttpUpdate.rebootOnUpdate(false);
 }
 
+void initLocalOTA() {
+  ArduinoOTA.onStart(updateStarted);
+  ArduinoOTA.onEnd(updateFinished);
+  ArduinoOTA.onProgress(updateProgress);
+  ArduinoOTA.onError(updateError);
+}
+
+void otaStartAP() {
+  DEBUGLN(F(L_OTA_MODE));
+  DEBUG(F(L_WIFI_OTA_CREATING));
+  DEBUGLN(F(WIFI_OTA_AP_NAME));
+  DEBUG(F(L_WIFI_OTA_PASSWORD));
+  DEBUG(F(L_QUOTE_L));
+  DEBUG(F(WIFI_OTA_AP_PASSWORD)); 
+  DEBUGLN(F(L_QUOTE_R));
+  otaMode = true;
+
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(F(WIFI_OTA_AP_NAME), F(WIFI_OTA_AP_PASSWORD));
+
+  DEBUG(F(L_IP_LOCAL_ADDRESS));
+  DEBUGLN(WiFi.softAPIP());
+
+  initLocalOTA();
+  ArduinoOTA.begin();
+  while (1) {
+    yield();
+    if (btnOTATick()) break;
+    animationLoadingTick(CRGB::Crimson);
+    ArduinoOTA.handle();
+  }
+  WiFi.softAPdisconnect(true);
+  while (!animationLoadingEndTick()) { yield(); }
+}
+
 void otaStartUpdate() {
   if (isBatteryLow()) {
     socketSendTo(packetUpdateError(UPDATE_ERR_BATTERY), lastClient);
@@ -40,14 +75,16 @@ bool fsUpdate() {
 }
 
 void updateStarted() {
-  DEBUGLN(F(L_OTA_WEB_UPDATE_STARTED));
+  DEBUGLN(F(L_OTA_UPDATE_STARTED));
   animationFlag = false;
+  otaInProgress = true;
 }
 
 void updateFinished() {
   while (animationLoadingEndTick()) { yield(); }
-  DEBUGLN(F(L_OTA_WEB_UPDATE_FINISHED));
+  DEBUGLN(F(L_OTA_UPDATE_FINISHED));
   animationFlag = true;
+  otaInProgress = false;
 }
 
 void updateProgress(int cur, int total) {
@@ -55,7 +92,7 @@ void updateProgress(int cur, int total) {
   int percent = round(((double)cur) / total * 100);
   if (lastPercent != percent) {
     #if (DEBUG_MODE)
-      Serial.printf(L_OTA_WEB_UPDATE_PROGRESS, percent, cur, total);
+      Serial.printf(L_OTA_UPDATE_PROGRESS, percent, cur, total);
       DEBUGLN();
     #endif
     delayMicroseconds(100);
@@ -67,7 +104,8 @@ void updateProgress(int cur, int total) {
 }
 
 void updateError(int err) {
-  DEBUGF(L_OTA_WEB_UPDATE_ERROR, err); DEBUGLN();
+  DEBUGF(L_OTA_UPDATE_ERROR, err); DEBUGLN();
+  otaInProgress = false;
 }
 
 void loadFSVersion() {

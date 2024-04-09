@@ -37,6 +37,12 @@ void startup() {
   initServer();
   
   if (!initWifi()) {
+    if (otaMode) {
+      otaStartAP();
+      DEBUGLN(F(L_RESTART));
+      ESP.restart();
+      return;
+    }
     DEBUGLN(F(L_WIFI_CONNECTION_ERROR));
     startAP();
     DEBUGLN(F(L_RESTART));

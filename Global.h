@@ -28,6 +28,8 @@ bool vibroFlag = true;
 bool ledPowerFlag = false;
 bool needUpdate = false;
 bool animationFlag = true;
+bool otaMode = false;
+bool otaInProgress = false;
 
 bool needUpdateCheck = false;
 AsyncWebSocketClient* lastClient;

@@ -35,8 +35,9 @@
 // Настройки подключения
 #define WIFI_CONNECTION_TIMER 15000
 #define WIFI_AP_NAME "CattyLED"
-#define WIFI_OTA_AP_NAME "CattyLED_OTA"
 #define WIFI_AP_PASSWORD "cattyled"
+#define WIFI_OTA_AP_NAME "CattyLED_OTA"
+#define WIFI_OTA_AP_PASSWORD "cattyled"
 
 // Настройки MQTT соединения
 #define MQTT_HOST "broker.emqx.io"
