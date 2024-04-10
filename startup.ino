@@ -12,10 +12,15 @@ void startup() {
     while (1) {}
   }
   http.setReuse(false);
+  espClient.setInsecure();
+  
   loadFSVersion();
   DEBUGF(L_FS_VERSION, fsVersion); DEBUGLN();
 
-  initBattery();
+  #if USE_BATTERY
+    initBattery();
+  #endif
+  
   initMemory();
   initLED();
   initFilters();

@@ -8,7 +8,7 @@ CRGB leds[LED_AMOUNT];
 VButton btn, vibroBtn;
 GFilterRA brightnessFilter;
 GFilterRA batteryFilter;
-WiFiClient espClient;
+BearSSL::WiFiClientSecure espClient;
 PubSubClient mqtt(espClient);
 EEManager memory(data);
 DNSServer dnsServer;

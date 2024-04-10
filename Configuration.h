@@ -6,6 +6,8 @@
 // 2 - вывода данных для плоттера
 #define DEBUG_MODE 1
 
+#define USE_BATTERY 0
+
 // Настройки светодиодов
 #define LED_PIN 1
 #define LED_AMOUNT 16
@@ -55,10 +57,10 @@
 #define PROTOCOL_SEPARATOR ","
 
 // Настройки обновления
-#define UPDATE_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/firmware.bin"
-#define UPDATE_VERSION_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/firmware_ver.txt"
-#define UPDATE_FS_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/fs.bin"
-#define UPDATE_FS_VERSION_URL "http://cattyledfirmwareserver.000webhostapp.com/LampKo/fs_ver.txt"
+#define UPDATE_URL "https://cattyled-server.onrender.com/LampKo/firmware.bin"
+#define UPDATE_VERSION_URL "https://cattyled-server.onrender.com/LampKo/firmware_ver.txt"
+#define UPDATE_FS_URL "https://cattyled-server.onrender.com/LampKo/fs.bin"
+#define UPDATE_FS_VERSION_URL "https://cattyled-server.onrender.com/LampKo/fs_ver.txt"
 
 // Настройки анимаций
 #define HEART_HUE 0

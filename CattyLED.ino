@@ -18,7 +18,10 @@ void loop() {
     return;
   }
 
-  batteryTick();
+  #if USE_BATTERY
+    batteryTick();
+  #endif
+  
   btnTick();
   mqttTick();
   socketTick();

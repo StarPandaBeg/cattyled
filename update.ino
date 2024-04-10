@@ -47,7 +47,7 @@ void otaStartAP() {
 }
 
 void otaStartUpdate() {
-  if (isBatteryLow()) {
+  if (isBatteryLow() && USE_BATTERY) {
     socketSendTo(packetUpdateError(UPDATE_ERR_BATTERY), lastClient);
     return;
   }
@@ -135,12 +135,18 @@ char* getRemoteVersion(char* url) {
   char ver[32];
   memset(ver, '\0', 32);
 
-  http.begin(String(url));
+  http.begin(espClient, String(url));
   int code = http.GET();
-  
+
+  DEBUGLN(String(url));
+  DEBUGLN(code);
+  DEBUGLN(http.getString());
+  DEBUGLN();
   if (code != 200) return "0.0.0";
   char* payload = (char*)(http.getString().c_str());
   strcpy(ver, payload);
+
+  DEBUGLN(http.getString());
   
   http.end();
   ws.enable(true);
