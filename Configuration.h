@@ -8,6 +8,10 @@
 
 #define USE_BATTERY 0
 
+// Инвертирует ID ламп
+// Установите в 1, чтобы получить прошивку для лампы-пары
+#define INVERT_PAIR 0
+
 // Настройки светодиодов
 #define LED_PIN 1
 #define LED_AMOUNT 16
@@ -49,18 +53,26 @@
 #define MQTT_PASS ""
 
 // Настройки пары ламп
-#define LOCAL_ID "LampKo"
-#define REMOTE_ID "LampDi"
+#define _LOCAL_ID "LampKo"
+#define _REMOTE_ID "LampDi"
+
+#if INVERT_PAIR == 1
+#define LOCAL_ID _REMOTE_ID
+#define REMOTE_ID _LOCAL_ID
+#else
+#define LOCAL_ID _LOCAL_ID
+#define REMOTE_ID _REMOTE_ID
+#endif
 
 // Настройки протокола соединения. Не рекомендуется изменять без крайней необходимости.
 #define PROTOCOL_HEADER "CATL:"
 #define PROTOCOL_SEPARATOR ","
 
 // Настройки обновления
-#define UPDATE_URL "https://cattyled-server.onrender.com/LampKo/firmware.bin"
-#define UPDATE_VERSION_URL "https://cattyled-server.onrender.com/LampKo/firmware_ver.txt"
-#define UPDATE_FS_URL "https://cattyled-server.onrender.com/LampKo/fs.bin"
-#define UPDATE_FS_VERSION_URL "https://cattyled-server.onrender.com/LampKo/fs_ver.txt"
+#define UPDATE_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/firmware.bin"
+#define UPDATE_VERSION_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/firmware_ver.txt"
+#define UPDATE_FS_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/fs.bin"
+#define UPDATE_FS_VERSION_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/fs_ver.txt"
 
 // Настройки анимаций
 #define HEART_HUE 0
