@@ -1,6 +1,7 @@
 /* Содержит объявление глобальных переменных */
 const int TOP_INDEX = int(LED_AMOUNT / 2);
 const uint8_t HEADER_LENGTH = strlen(PROTOCOL_HEADER);
+const uint8_t HEADER_APP_LENGTH = strlen(PROTOCOL_APP_HEADER);
 char* fsVersion;
 
 struct LampData data;
@@ -9,7 +10,8 @@ VButton btn, vibroBtn;
 GFilterRA brightnessFilter;
 GFilterRA batteryFilter;
 BearSSL::WiFiClientSecure espClient;
-PubSubClient mqtt(espClient);
+WiFiClient espClientInsecure;
+PubSubClient mqtt(espClientInsecure);
 EEManager memory(data);
 DNSServer dnsServer;
 AsyncWebServer server(80);
@@ -30,9 +32,10 @@ bool needUpdate = false;
 bool animationFlag = true;
 bool otaMode = false;
 bool otaInProgress = false;
+bool mdnsActive = false;
 
 bool needUpdateCheck = false;
-AsyncWebSocketClient* lastClient;
+AsyncWebSocketClient* lastClient = NULL;
 short updateType = -1;
 
 int8_t loadingDirection = 1;

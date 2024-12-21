@@ -97,6 +97,8 @@ char* packetMqtt() {
   static String s;
   bool val = strlen(data.mqttUser) == 0;
   s = PROTOCOL_HEADER "-6" PROTOCOL_SEPARATOR;
+  s += data.mqttActive ? 1 : 0;
+  s += PROTOCOL_SEPARATOR;
   s += data.mqttHost;
   s += PROTOCOL_SEPARATOR;
   s += data.mqttPort;
@@ -157,5 +159,20 @@ char* packetIp() {
   s += data.ip[2];
   s += '.';
   s += data.ip[3];
+  return (char*)s.c_str();
+}
+
+char* packetIds() {
+  static String s;
+  s = PROTOCOL_HEADER "-20" PROTOCOL_SEPARATOR;
+  s += data.localName;
+  s += PROTOCOL_SEPARATOR;
+  s += data.remoteName;
+  return (char*)s.c_str();
+}
+
+char* packetUpdateServer() {
+  static String s;
+  s = PROTOCOL_HEADER "-22" PROTOCOL_SEPARATOR UPDATE_SERVER LOCAL_ID;
   return (char*)s.c_str();
 }

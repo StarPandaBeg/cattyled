@@ -4,7 +4,7 @@
 // 0 - отладка отключена
 // 1 - вывод лога в COM-порт
 // 2 - вывода данных для плоттера
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 #define USE_BATTERY 0
 
@@ -67,12 +67,16 @@
 // Настройки протокола соединения. Не рекомендуется изменять без крайней необходимости.
 #define PROTOCOL_HEADER "CATL:"
 #define PROTOCOL_SEPARATOR ","
+#define PROTOCOL_APP_HEADER "CATLAPP:"
+
+#define MDNS_DOMAIN "cattyled"
 
 // Настройки обновления
-#define UPDATE_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/firmware.bin"
-#define UPDATE_VERSION_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/firmware_ver.txt"
-#define UPDATE_FS_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/fs.bin"
-#define UPDATE_FS_VERSION_URL "https://cattyled-server.onrender.com/" LOCAL_ID "/fs_ver.txt"
+#define UPDATE_SERVER "https://cattyled-server.onrender.com/"
+#define UPDATE_URL UPDATE_SERVER LOCAL_ID "/firmware.bin"
+#define UPDATE_VERSION_URL UPDATE_SERVER LOCAL_ID "/firmware_ver.txt"
+#define UPDATE_FS_URL UPDATE_SERVER LOCAL_ID "/fs.bin"
+#define UPDATE_FS_VERSION_URL UPDATE_SERVER LOCAL_ID "/fs_ver.txt"
 
 // Настройки анимаций
 #define HEART_HUE 0
@@ -94,7 +98,7 @@
 #define LOADING_ANIMATION_BRIGHTNESS_MAX 140
 
 // Ключ EEPROM. При изменении все содержимое EEPROM перезаписывается.
-#define EEPROM_KEY 'a'
+#define EEPROM_KEY 'b'
 
 struct LampData {
   bool power = false;
@@ -112,6 +116,7 @@ struct LampData {
   char localName[10] = LOCAL_ID;
   char remoteName[10] = REMOTE_ID;
 
+  bool mqttActive = true;
   char mqttHost[32] = MQTT_HOST;
   uint16_t mqttPort = MQTT_PORT;
   char mqttPrefix[32] = MQTT_PREFIX;

@@ -106,6 +106,8 @@ void updateProgress(int cur, int total) {
 void updateError(int err) {
   DEBUGF(L_OTA_UPDATE_ERROR, err); DEBUGLN();
   otaInProgress = false;
+
+  socketSendTo(packetUpdateError(err), lastClient);
 }
 
 void loadFSVersion() {

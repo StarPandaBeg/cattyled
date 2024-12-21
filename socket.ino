@@ -164,6 +164,9 @@ void parseConfigCommands(char* str, AsyncWebSocketClient *client) {
 
       strtok(str, PROTOCOL_SEPARATOR);
       tmp = strtok(NULL, PROTOCOL_SEPARATOR);
+      mqttSetState(tmp[0] == '1');
+      
+      tmp = strtok(NULL, PROTOCOL_SEPARATOR);
       strcpy(data.mqttHost, tmp);
       tmp = strtok(NULL, PROTOCOL_SEPARATOR);
       data.mqttPort = atoi(tmp);

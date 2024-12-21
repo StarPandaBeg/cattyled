@@ -1,4 +1,4 @@
-#define FIRMWARE_VERSION "1.0.5"
+#define FIRMWARE_VERSION "1.2.0"
 #define CATTY_VERSION "CattyLED v" FIRMWARE_VERSION " by StarPanda"
 
 #include "Locale.h"
@@ -24,6 +24,7 @@ void loop() {
   
   btnTick();
   mqttTick();
+  mdnsTick();
   socketTick();
   animationTick();
   memoryTick();

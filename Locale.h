@@ -43,3 +43,6 @@
 #define L_RESTART "Restarting..."
 #define L_SLEEP "Going to sleep mode."
 #define L_WAKEUP "Good morning!"
+
+#define L_MDNS_FAIL "MDNS Init Fail"
+#define L_MDNS_OK "MDNS Init OK. Domain - "

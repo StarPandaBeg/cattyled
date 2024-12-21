@@ -14,6 +14,7 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClientSecureBearSSL.h>
 #include <ArduinoOTA.h>
+#include <ESP8266mDNS.h>
 
 #include "EEManager.h"
 #include "Timer.h"

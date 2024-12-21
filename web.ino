@@ -1,5 +1,8 @@
 void initServer() {
   DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
+  DefaultHeaders::Instance().addHeader("Cache-Control", "public, max-age=604800");
+  DefaultHeaders::Instance().addHeader("ETag", fsVersion);
+  
   server.serveStatic("/", LittleFS, "/").setDefaultFile("index.html");
   server.onNotFound([](AsyncWebServerRequest *request){
     request->send(LittleFS, "/index.html");
@@ -15,6 +18,11 @@ void serverWriteData(IPAddress ip, bool is_ap) {
   s += PROTOCOL_HEADER;
   s += "';window.catl_ap=";
   s += is_ap ? "true;" : "false;";
+  s += "window.catl_id_local='" LOCAL_ID "';";
+  s += "window.catl_id_remote='" REMOTE_ID "';";
+  s += "window.catl_update_server='" UPDATE_SERVER "';";
+  s += "window.catl_battery=";
+  s += USE_BATTERY ? "true;" : "false;";
   
   file.print(s);
   delay(1);

@@ -11,12 +11,12 @@ void startup() {
     DEBUGLN(F(L_FS_INIT_ERROR));
     while (1) {}
   }
+  loadFSVersion();
+  DEBUGF(L_FS_VERSION, fsVersion); DEBUGLN();
+  
   http.setReuse(false);
   espClient.setInsecure();
   
-  loadFSVersion();
-  DEBUGF(L_FS_VERSION, fsVersion); DEBUGLN();
-
   #if USE_BATTERY
     initBattery();
   #endif
@@ -59,6 +59,7 @@ void startup() {
   DEBUG(F(L_IP_ADDRESS)); DEBUGLN(ip.toString());
   
   mqttInit();
+  mdnsInit();
   serverWriteData(ip, false);
   server.begin();
 }
